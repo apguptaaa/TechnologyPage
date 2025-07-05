@@ -10,5 +10,7 @@ router.post('/technoinsert', TechnoController.technoinsert);
 // router.get('/technodisplay', TechnoController.technodisplay);
 router.get('/technodisplay', TechnoController.technodisplay);
 
-
+router.get("/technoview/:id", TechnoController.technoview);
+router.put("/technoupdate/:id", TechnoController.technoupdate);
+router.delete("/technodelete/:id", TechnoController.technodelete);
 module.exports = router;

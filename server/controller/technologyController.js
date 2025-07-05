@@ -67,20 +67,6 @@ class TechnologiesController {
       res.status(500).json({ message: "Server Error" });
     }
   }
-
-
-
-//   // Display All Technologies
-// static async technodisplay(req, res) {
-//   try {
-//     const technologies = await TechnologyModel.find().sort({ _id: -1 }); // latest first
-//     res.status(200).json({ technologies });
-//   } catch (error) {
-//     console.error("❌ Error in technodisplay:", error);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// }
-
 // GET all technologies
 static async technodisplay(req, res) {
   try {
@@ -88,6 +74,71 @@ static async technodisplay(req, res) {
     res.status(200).json({ success: true, data });
   } catch (error) {
     console.error("❌ Error in technodisplay:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+}
+
+static async technoview(req, res) {
+  try {
+    const id = req.params.id;
+    const tech = await TechnologyModel.findById(id);
+
+    if (!tech) {
+      return res.status(404).json({ message: "Technology not found" });
+    }
+
+    res.status(200).json({ success: true, data: tech });
+  } catch (error) {
+    console.error("❌ Error in technoview:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+}
+
+
+//update technology
+static async technoupdate(req, res) {
+  try {
+    const id = req.params.id;
+    const { title, description } = req.body;
+
+    const updatedData = { title, description };
+
+    // Optional: update image if provided
+    if (req.files && req.files.image) {
+      const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+        folder: "technologies",
+      });
+      updatedData.image = result.secure_url;
+    }
+
+    const updatedTech = await TechnologyModel.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+
+    if (!updatedTech) {
+      return res.status(404).json({ message: "Technology not found" });
+    }
+
+    res.status(200).json({ success: true, data: updatedTech });
+  } catch (error) {
+    console.error("❌ Error in technoupdate:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+}
+
+// Delete technology
+static async technodelete(req, res) {
+  try {
+    const id = req.params.id;
+    const tech = await TechnologyModel.findByIdAndDelete(id);
+
+    if (!tech) {
+      return res.status(404).json({ message: "Technology not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Deleted successfully" });
+  } catch (error) {
+    console.error("❌ Error in technodelete:", error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 }
