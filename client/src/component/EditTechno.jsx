@@ -20,7 +20,7 @@ const EditTechno = () => {
     useEffect(() => {
         const fetchTechno = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/technoview/${id}`);
+                const res = await axios.get(`https://technoserverapi.onrender.com/api/technoview/${id}`);
                 setFormData({
                     title: res.data.data.title,
                     description: res.data.data.description,

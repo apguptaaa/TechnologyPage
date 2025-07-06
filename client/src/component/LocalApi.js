@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Set your backend API base URL
-const BaseUrl =  'http://localhost:5000/api';
+const BaseUrl =  'https://technoserverapi.onrender.com/api';
 
 const axiosInstance = axios.create({
   baseURL: BaseUrl,

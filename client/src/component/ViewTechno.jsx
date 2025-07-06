@@ -69,7 +69,7 @@ const ViewTechnology = () => {
   useEffect(() => {
     const fetchTech = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/technoview/${id}`);
+        const res = await axios.get(`https://technoserverapi.onrender.com/api/technoview/${id}`);
         const data = res.data.data || res.data;
         setTech(data);
       } catch (err) {
