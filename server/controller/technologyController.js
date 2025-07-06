@@ -96,30 +96,77 @@ static async technoview(req, res) {
 
 
 //update technology
+// static async technoupdate(req, res) {
+//   try {
+//     const id = req.params.id;
+//     const { title, description } = req.body;
+
+//     const updatedData = { title, description };
+
+//     // Optional: update image if provided
+//     if (req.files && req.files.image) {
+//       const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+//         folder: "technologies",
+//       });
+//       updatedData.image = result.secure_url;
+//     }
+
+//     const updatedTech = await TechnologyModel.findByIdAndUpdate(id, updatedData, {
+//       new: true,
+//     });
+
+//     if (!updatedTech) {
+//       return res.status(404).json({ message: "Technology not found" });
+//     }
+
+//     res.status(200).json({ success: true, data: updatedTech });
+//   } catch (error) {
+//     console.error("❌ Error in technoupdate:", error);
+//     res.status(500).json({ success: false, message: "Server Error" });
+//   }
+// }
 static async technoupdate(req, res) {
   try {
     const id = req.params.id;
     const { title, description } = req.body;
+    const file = req.files?.image;
 
-    const updatedData = { title, description };
-
-    // Optional: update image if provided
-    if (req.files && req.files.image) {
-      const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
-        folder: "technologies",
-      });
-      updatedData.image = result.secure_url;
-    }
-
-    const updatedTech = await TechnologyModel.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
-
-    if (!updatedTech) {
+    // Step 1: Find the existing technology
+    const tech = await TechnologyModel.findById(id);
+    if (!tech) {
       return res.status(404).json({ message: "Technology not found" });
     }
 
-    res.status(200).json({ success: true, data: updatedTech });
+    let image = tech.image;
+    let public_id = tech.public_id;
+
+    // Step 2: If new image is uploaded, delete old image and upload new one
+    if (file) {
+      if (public_id) {
+        await cloudinary.uploader.destroy(public_id);
+      }
+
+      const upload = await cloudinary.uploader.upload(file.tempFilePath, {
+        folder: "technologies",
+      });
+
+      image = upload.secure_url;
+      public_id = upload.public_id;
+    }
+
+    // Step 3: Update the record in MongoDB
+    const updatedTech = await TechnologyModel.findByIdAndUpdate(
+      id,
+      { title, description, image, public_id },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Technology updated successfully",
+      data: updatedTech,
+    });
+
   } catch (error) {
     console.error("❌ Error in technoupdate:", error);
     res.status(500).json({ success: false, message: "Server Error" });

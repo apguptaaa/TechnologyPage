@@ -19,7 +19,7 @@ export const getAllTechnologies = () => {
 
 // Get a single technology by ID
 export const getTechnologyById = (id) => {
-  return axiosInstance.get(`/technosingle/${id}`);
+  return axiosInstance.get(`/technoview/${id}`);
 };
 
 // Update a technology by ID
