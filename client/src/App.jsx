@@ -12,12 +12,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Technology />} />
-      <Route path="/displaytech" element={<DisplayTechnology />} />
-      <Route path="/mainpage" element={<MainPage />} />
       <Route path="/edit/:id" element={<EditTechno />} />
-      <Route path="/view/:id" element={<ViewTechno/>} />
-
-
+      <Route path="/view/:id" element={<ViewTechno />} />
     </Routes>
 
 
