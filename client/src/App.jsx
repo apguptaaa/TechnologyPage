@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // ✅ Import this
 import Technology from './component/Technology';
-import DisplayTechnology from './component/DisplayTechno';
-import MainPage from './component/MainPage';
 import EditTechno from './component/EditTechno';
 import ViewTechno from './component/ViewTechno';
 

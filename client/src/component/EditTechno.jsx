@@ -78,7 +78,7 @@ const EditTechno = () => {
                 {/* Left Section: Form */}
                 <div className="p-10">
                     <h2 className="text-4xl font-bold text-indigo-700 mb-6 text-center">
-                         Edit Technology
+                        Edit Technology
                     </h2>
 
                     <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
@@ -115,31 +115,41 @@ const EditTechno = () => {
                                 name="image"
                                 accept="image/*"
                                 onChange={handleChange}
-                                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
-                                    file:rounded-full file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-indigo-600 file:text-white
-                                    hover:file:bg-indigo-700 transition duration-300"
+                                className="w-full border-2 file:bg-indigo-700 file:px-9 file:py-3 file:rounded-full file:text-white  border-dashed border-gray-400 rounded-lg px-4 py-6"
                             />
                         </div>
-
-                        <div className="text-center">
+                        <div className="flex justify-center items-center gap-3 mt-20 flex-wrap">
+                            {/* Update Button */}
                             <button
                                 type="submit"
-                                className="w-full py-3 px-6 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-xl transition-transform transform hover:scale-105 shadow-md flex items-center justify-center gap-2"
+                                className="flex items-center justify-center px-4 py-4 bg-indigo-600 hover:bg-indigo-800 text-white text-sm sm:text-base font-semibold rounded-xl transition-transform hover:scale-105 shadow-md disabled:opacity-50"
                                 disabled={loading}
                             >
                                 {loading && (
-                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
                                 )}
-                                🔄 {loading ? 'Updating...' : 'Update Technology'}
+                                {loading ? 'Updating...' : 'Update Technology'}
+                            </button>
+
+                            {/* Back Button */}
+                            <button
+                                onClick={() => navigate("/")}
+                                className="flex items-center justify-center px-4 py-4 bg-gray-300 hover:bg-gray-400 text-gray-900 text-sm sm:text-base rounded-xl transition-transform hover:scale-105 shadow-md"
+                            >
+                                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                                Back to Home
                             </button>
                         </div>
+
+
+
                     </form>
                 </div>
 
                 {/* Right Section: Current Image */}
-                <div className="bg-indigo-50 p-20 flex flex-col items-center justify-center border-l border-gray-200">
+                <div className="bg-indigo-50 p-15 flex flex-col items-center justify-center border-l border-gray-200">
                     {formData.oldImage ? (
                         <>
                             <p className="text-sm text-gray-500 mb-3">Current Image</p>
@@ -167,13 +177,13 @@ const EditTechno = () => {
                                     setShowConfirmModal(false);
                                     submitForm();
                                 }}
-                                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                                className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
                             >
                                 Yes
                             </button>
                             <button
                                 onClick={() => setShowConfirmModal(false)}
-                                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                                className="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500"
                             >
                                 No
                             </button>
